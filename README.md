@@ -34,13 +34,12 @@ python run.py
 ```
 
 5. Running Tests
-Run the test file using unittest:
 ```sh
 python -m unittest tests.test_loan
 ```
 
 ## Project Structure
-
+```sh
 aspire-project/
 ├── app/
 │   ├── __init__.py
@@ -52,6 +51,6 @@ aspire-project/
 ├── requirements.txt
 ├── run.py
 └── README.md
-
+```
 
 
