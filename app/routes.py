@@ -21,6 +21,14 @@ def get_loans():
     loans = Loan.get_loans(user_id)
     return jsonify({"loans": loans}), 200
 
+@main.route('/loan/approve/<int:loan_id>', methods=['POST'])
+def approve_loan(loan_id):
+    success, message = Loan.approve_loan(loan_id)
+    if success:
+        return jsonify({"message": message}), 200
+    else:
+        return jsonify({"message": message}), 400
+
 @main.route('/repayment/<int:loan_id>/<int:repayment_id>', methods=['POST'])
 def add_repayment(loan_id, repayment_id):
     data = request.get_json()

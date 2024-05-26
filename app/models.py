@@ -24,6 +24,14 @@ class Loan:
         if user_id:
             return [loan for loan in cls._loans if loan['user_id'] == int(user_id)]
         return cls._loans
+    
+    @classmethod
+    def approve_loan(cls, loan_id):
+        for loan in cls._loans:
+            if loan['id'] == loan_id:
+                loan['status'] = 'APPROVED'
+                return True, "Loan approved successfully!"
+        return False, "Loan not found."
 
     @staticmethod
     def _generate_repayments(amount, term):
@@ -39,6 +47,8 @@ class Loan:
     def add_repayment(cls, loan_id, repayment_id, amount, user_id):
         for loan in cls._loans:
             if loan['id'] == loan_id and loan['user_id'] == user_id:
+                if loan['status'] != 'APPROVED':
+                    return False, "Loan not approved yet."
                 if amount >= loan['repayments'][repayment_id]['amount']:
                     loan['repayments'][repayment_id]['status'] = 'PAID'
                     if all(repayment['status'] == 'PAID' for repayment in loan['repayments']):

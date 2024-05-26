@@ -22,7 +22,8 @@ class LoanTestCase(unittest.TestCase):
         self.assertIsInstance(data['loans'], list)
 
     def test_add_repayment(self):
-        response = self.app.post('/loan', json={"amount": 10000, "term": 3, "user_id": 1})
+        self.app.post('/loan', json={"amount": 10000, "term": 3, "user_id": 1})
+        self.app.post('/loan/approve/1')
         response = self.app.post('/repayment/1/0', json={"amount": 3333.33, "user_id": 1})
         data = json.loads(response.data.decode())
         print("test_add_repayment response --> ", response.data)
@@ -31,6 +32,8 @@ class LoanTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Repayment added successfully!')
 
     def test_add_repayment_invalid_amount(self):
+        self.app.post('/loan', json={"amount": 10000, "term": 3, "user_id": 1})
+        self.app.post('/loan/approve/1')
         response = self.app.post('/repayment/1/0', json={"amount": 2000, "user_id": 1})
         data = json.loads(response.data.decode())
         print(data)
@@ -44,6 +47,14 @@ class LoanTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn('message', data)
         self.assertEqual(data['message'], 'Loan not found or does not belong to the user.')
+
+    def test_approve_loan(self):
+        self.app.post('/loan', json={"amount": 10000, "term": 3, "user_id": 1})
+        response = self.app.post('/loan/approve/1')
+        data = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('message', data)
+        self.assertEqual(data['message'], 'Loan approved successfully!')
 
 if __name__ == '__main__':
     unittest.main()
