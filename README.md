@@ -15,24 +15,29 @@ Postman Documentation: https://documenter.getpostman.com/view/8128762/2sA3QqhDSy
 ```sh
 git clone https://github.com/your-repo/mini-aspire-api.git
 cd mini-aspire-api
+```
 
 2. Create and activate a virtual environment
 ```sh
 python -m venv aspire_venv
 source aspire_venv/bin/activate  # On Windows use `aspire_venv\Scripts\activate`
+```
 
 3. Install the dependencies
 ```sh
 pip install -r requirements.txt
+```
 
 4. Run the project
 ```sh
 python run.py
+```
 
 5. Running Tests
 Run the test file using unittest:
 ```sh
 python -m unittest tests.test_loan
+```
 
 ## Project Structure
 
